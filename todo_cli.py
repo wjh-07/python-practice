@@ -1,10 +1,13 @@
+import json
+import os
+if os.path.exists("todos.json"):
+    with open("todos.json","r",encoding="utf-8") as f:
+        todos=json.load(f)
+else:
+    todos=[]
 # todo_cli.py  —— v0.1
 # 功能：添加待办、查看待办
 # 数据存在内存里，关掉程序就没了（v0.4 再解决持久化）
-
-todos = []      # 所有待办都存在这个列表里，每条是一个字典
-
-
 def add_todo(task):
     """添加一条待办"""
     todos.append({"task": task, "done": False})
@@ -38,6 +41,9 @@ def mark_done():
         else:
             todos[idx]["done"] = True
             print(f"已标记完成{todos[idx]['task']}")
+def save_todos():
+    with open("todos.json","w",encoding="utf-8") as f:
+        json.dump(todos,f,ensure_ascii=False,indent=2)
 
 
 
@@ -57,12 +63,15 @@ while True:
     if choice == "1":
         task = input("要做什么：")
         add_todo(task)
+        save_todos()
     elif choice == "2":
         show_todos()
     elif choice == "3":
         del_todos()
+        save_todos()
     elif choice == "4":
         mark_done()
+        save_todos()
     elif choice == "5":
         print("再见")
         break
