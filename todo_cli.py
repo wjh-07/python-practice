@@ -28,6 +28,17 @@ def del_todos():
         print("删除成功")
     else:
         print("删除失败")
+def mark_done():
+    show_todos()
+    num=int(input("标记完成的事件编号： "))
+    idx=num-1
+    if 0 <= idx < len(todos):
+        if todos[idx]["done"]:
+            print("这条已经完成了")
+        else:
+            todos[idx]["done"] = True
+            print(f"已标记完成{todos[idx]['task']}")
+
 
 
 
@@ -39,7 +50,8 @@ while True:
     print("1. 添加待办")
     print("2. 查看待办")
     print("3. 删除代办")
-    print("4. 退出")
+    print("4. 标记完成")
+    print("5. 退出")
     choice = input("请选择：")
 
     if choice == "1":
@@ -49,8 +61,11 @@ while True:
         show_todos()
     elif choice == "3":
         del_todos()
-        break
     elif choice == "4":
+        mark_done()
+    elif choice == "5":
         print("再见")
+        break
+
     else:
-        print("无效选择，请输入 1-4")
+        print("无效选择，请输入 1-5")
