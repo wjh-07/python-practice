@@ -10,10 +10,10 @@ else:
 # 数据存在内存里，关掉程序就没了（v0.4 再解决持久化）
 def add_todo(task):
     """添加一条待办"""
-    todos.append({"task": task, "done": False})
+    level=input("优先级(1 低 2 中 3 高 )")
+    todos.append({"task": task, "done": False,"priority":int(level)})
     print(f"已添加：{task}")
-
-
+    save_todos()
 def show_todos():
     """显示所有待办"""
     if not todos:
@@ -21,7 +21,7 @@ def show_todos():
         return
     for i, todo in enumerate(todos, start=1):
         mark = "[x]" if todo["done"] else "[ ]"
-        print(f"{i}. {mark} {todo['task']}")
+        print(f"{i}. {mark} [P{todo.get('priority', 2)}] {todo['task']}")
 def del_todos():
     show_todos()
     num=int(input("请输入要删除的待办事件的编号："))
@@ -44,12 +44,6 @@ def mark_done():
 def save_todos():
     with open("todos.json","w",encoding="utf-8") as f:
         json.dump(todos,f,ensure_ascii=False,indent=2)
-
-
-
-
-
-
 # 主程序：不断显示菜单，等用户选择
 while True:
     print("\n===== 待办清单 =====")
@@ -59,7 +53,6 @@ while True:
     print("4. 标记完成")
     print("5. 退出")
     choice = input("请选择：")
-
     if choice == "1":
         task = input("要做什么：")
         add_todo(task)
@@ -75,6 +68,5 @@ while True:
     elif choice == "5":
         print("再见")
         break
-
     else:
         print("无效选择，请输入 1-5")

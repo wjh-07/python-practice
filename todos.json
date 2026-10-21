@@ -1,0 +1,12 @@
+[
+  {
+    "task": "背单词",
+    "done": false,
+    "priority": 2
+  },
+  {
+    "task": "复习",
+    "done": false,
+    "priority": 3
+  }
+]
